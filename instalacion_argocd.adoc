@@ -1,0 +1,91 @@
+:imageprefix: img/instalacion
+
+= Instalación de ArgoCD
+
+Usando un cluster de prueba con permisos de administración:
+
+Se crea un namespace llamado argocd:
+
+image::{imageprefix}/creacion_proyecto.png[]
+
+Desde el OperatorHub, se instala el operator de argocd. (El que aparece en la imagen como Installed)
+
+image::{imageprefix}/operator_hub.png[]
+
+
+Una vez creado, se entra en el operador y pulsamos el botón Create ArgoCD dentro de la pestaña ArgoCD:
+
+image::{imageprefix}/creacion_argocd.png[]
+
+
+Elegimos configurarlo vía yaml:
+
+image::{imageprefix}/creacion_argocd_yml.png[]
+
+
+[source,yaml]
+----
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  namespace: argocd
+  name: argocd
+spec:
+  server:
+    route:
+      enabled: true
+  dex:
+    openShiftOAuth: true
+    image: quay.io/ablock/dex
+    version: openshift-connector
+  rbac:
+    policy:
+      g, system:cluster-admins, role:admin
+----
+
+
+
+
+Con esta configuración, especificamos que el servidor de argocd tenga una ruta, habilitamos que se pueda hacer login en argocd usando el mismo login que en openshift y definimos que los usuarios que pertenezcan al grupo system:cluster-admins sean administradores de argocd.
+
+Cuando argocd esté listo, el status será Phase: Available:
+
+image::{imageprefix}/argocd_instalado.png[]
+
+
+Si nos vamos a los pods, veremos que se han levantado de manera correcta:
+
+image::{imageprefix}/lista_pods.png[]
+
+
+Observamos que se ha creado correctamente la ruta:
+
+image::{imageprefix}/ruta_argocd_creada.png[]
+
+
+Si entramos en la ruta, vemos que se puede hacer login via OpenShift:
+
+image::{imageprefix}/pantalla_login.png[]
+
+Si no, el usuario administrador es admin y la contraseña, la podemos ver en el secreto argocd-cluster:
+
+image::{imageprefix}/secretos.png[]
+
+
+Ahí podemos ver el secreto admin.password:
+
+image::{imageprefix}/detalle_secreto_adminpassword.png[]
+
+
+También podemos acceder al secreto desde la consola de openshift:
+
+
+[source,bash]
+----
+oc -n argocd get secret argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d && echo
+----
+
+Una vez hacemos login, podemos ver la pantalla inicial de argocd:
+
+image::{imageprefix}/pantalla_inicio.png[]
+

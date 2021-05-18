@@ -1,0 +1,39 @@
+:imageprefix: img/cluster
+
+= Añadir cluster a ArgoCD
+
+* Hacemos login desde la terminal (es necesario que el cli de ArgoCD esté instalado). Para ello, podemos seguir la documentación de ArgoCD: https://argoproj.github.io/argo-cd/cli_installation/
+
+* Suponiendo que la ruta de ArgoCd sea argocd-server-argocd.apps.cluster-df25.sandbox1686.opentlc.com:
+
+[source,bash]
+----
+argocd login --sso argocd-server-argocd.apps.cluster-df25.sandbox1686.opentlc.com
+----
+
+* Luego, tenemos que hacer login en el cli openshift, podemos hacerlo copiando el comando de login desde el panel de Openshift:
+
+image::{imageprefix}/copiar_comando_login.png[]
+
+
+* Listamos los clusters disponibles en los que estamos logueados:
+
+[source,bash]
+----
+argocd cluster add
+----
+
+image::{imageprefix}/comando_cluster_add.png[]
+
+
+* Cogemos el name del cluster que queramos, en este caso: default/api-cluster-df25-sandbox1686-opentlc-com:6443/kube:admin
+* Agregamos el cluster a ArgoCD:
+
+[source,bash]
+----
+argocd cluster add default/api-cluster-df25-sandbox1686-opentlc-com:6443/kube:admin
+----
+
+Una vez hecho esto, podemos ver en ArgoCD que tenemos acceso al cluster:
+
+image::{imageprefix}/lista_cluster.png[]

@@ -1,0 +1,13 @@
+== Changelog de ArgoCD == 
+
+[%header,cols="6,2,1"]
+|===
+|Descripción
+|Fecha
+|Versión
+
+|Versión inicial de la documentación
+|18/05/2021
+|0.1
+
+|===

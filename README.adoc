@@ -1,0 +1,15 @@
+include::vars.adoc[]
+
+= {title} =
+
+{sp} +
+
+<<<
+toc::[]
+
+<<<
+
+include::instalacion_argocd.adoc[leveloffset=+1]
+include::añadir_cluster.adoc[leveloffset=+1]
+include::añadir_repositorio_privado.adoc[leveloffset=+1]
+include::crear_aplicacion.adoc[leveloffset=+1]

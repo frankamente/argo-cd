@@ -1,0 +1,17 @@
+:imageprefix: img/repositorio
+
+= Agregar Repositorio privado a ArgoCD
+
+* Entramos en Settings/Repositories:
+
+image::{imageprefix}/settings.png[]
+
+
+* En función de si queremos agregarlo usando usuario y contraseña o por ssh, elegiremos HTTPS o SSH:
+
+image::{imageprefix}/opciones_agregar_repositorio.png[]
+
+
+* Un ejemplo de uso con SSH sería:
+
+image::{imageprefix}/ejemplo.png[]

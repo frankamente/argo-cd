@@ -1,0 +1,86 @@
+:imageprefix: img/crear_aplicacion
+
+= Crear aplicación en ArgoCD
+
+* Pulsamos sobre el botón de New App y vamos rellenando los campos:
+
+image::{imageprefix}/formulario_creacion.png[]
+
+* En el campo Application Name, ponemos el nombre que queramos que tenga nuestra aplicación en ArgoCD.
+* Como project, elegimos default . Esto solo afecta a ArgoCD, no a Openshift.
+* Como política de sincronización, vamos a elegir manual, aunque podremos cambiarlo más adelante.
+* Marcamos la opción de que autogenere el namespace. Así, si no existe, nos lo creará.
+* En la URL del repositorio, al pulsar, nos saltará un desplegable con los repositorios que hayamos definido previamente.
+* En Revision, elegimos la rama que queramos usar, en este caso podemos dejar HEAD.
+* En Path, podemos añadir la ruta dentro del repositorio en la que se encuentra la definición de nuestro entorno.
+* Por último, definimos en qué cluster se va a desplegar y cual será su namespace. Como ya hemos añadido previamente el cluster, nos saldrá un desplegable con la opción:
+
+image::{imageprefix}/eleccion_cluster.png[]
+
+* Le damos a crear.
+
+== Gestionar aplicación en ArgoCD
+
+* Una vez que hemos creado la aplicación, veremos algo como lo siguiente:
+
+image::{imageprefix}/vista_inicial_aplicacion.png[]
+
+Como podemos observar, todo está pendiente de sincronizar (hemos elegido sincronización manual).
+
+* Si pulsamos para ver el detalle de la aplicación, veremos más información:
+
+
+image::{imageprefix}/vista_inicial_detalle_aplicacion.png[]
+
+En esta pantalla, podemos ver que nuestra aplicación está formada por 4 objetos, ya que esos son los ficheros que tenemos dentro de la carpeta bgd en nuestro repositorio:
+
+image::{imageprefix}/vista_repositorio.png[]
+
+
+* Un deployment (en ArgoCD lo vemos como deploy )
+* Un namespace (en ArgoCD lo vemos como ns )
+* Un route (en ArgoCD lo vemos como route )
+* Un service (en ArgoCD lo vemos como svc )
+
+Para que todo empiece, tenemos que darle a SYNC y luego a Syncronize:
+
+image::{imageprefix}/formulario_sincronizar.png[]
+
+
+Ya podemos ver que la aplicación empieza a sincronizarse y a levantar los objetos:
+
+image::{imageprefix}/vista_inicial_sincronizando.png[]
+
+Cuando todo termina, nos encontramos con una pantalla como la siguiente:
+
+image::{imageprefix}/vista_inicial_sincronizado.png[]
+
+
+Como en el deployment teníamos definido una única réplica, podemos ver que solo se genera un pod, pero si modificamos el deployment y añadimos 2 réplicas y sincronizamos, podemos ver como se actualiza y empieza a levantar el segundo pod:
+
+image::{imageprefix}/vista_dos_pods.png[]
+
+
+Podemos ver estos objetos creados en OpenShift:
+
+Deployment:
+Podemos ver que se ha creado el deployment con 2 pods como hemos reflejado con el deployment. También vemos que el deployment pertenece al proyecto que habíamos definido a la hora de la creación de la aplicación en ArgoCD:
+
+image::{imageprefix}/deployment.png[]
+
+
+Service:
+
+image::{imageprefix}/service.png[]
+
+Namespace:
+
+image::{imageprefix}/namespace.png[]
+
+Route:
+
+image::{imageprefix}/route.png[]
+
+Y por último, podemos acceder a la aplicación para ver nuestra aplicación:
+
+image::{imageprefix}/vista_aplicacion.png[]
