@@ -23,7 +23,6 @@ image::{imageprefix}/copiar_comando_login.png[]
 argocd cluster add
 ----
 
-image::{imageprefix}/comando_cluster_add.png[]
 
 
 * Cogemos el name del cluster que queramos, en este caso: default/api-cluster-df25-sandbox1686-opentlc-com:6443/kube:admin
