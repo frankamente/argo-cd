@@ -1,3 +1,3 @@
 - op: replace
   path: /spec/host
-  value: ""
+  value: "test-cluster2.apps.cluster-c18c.c18c.example.opentlc.com"
